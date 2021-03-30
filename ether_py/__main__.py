@@ -16,8 +16,11 @@ from . import (
     __version__,
     ETHERPY_DATA_DIR,
 )
-from ether_py.utils import Timer
-
+from ether_py.utils import (
+    ganache_url,
+    infura_url,
+    Timer,
+)
 # External dependencies.
 
 from cliff.app import App

@@ -11,12 +11,27 @@ from logging import Logger
 
 
 BROWSER = os.getenv('BROWSER', None)
+INFURA_TLD = 'infura.io'
 # Use syslog for logging?
 # TODO(dittrich): Make this configurable, since it can fail on Mac OS X
 SYSLOG = False
 
 
 logger = logging.getLogger(__name__)
+
+
+def ganache_url(host='127.0.0.1', port='7445'):
+    """Return URL for Ganache test server."""
+    return f"http://{host}:{port}"
+
+
+def infura_url(
+    endpoint='mainnet',
+    project_id=None,
+    api_version='v3'
+):
+    """Return full project URL for Infura endpoint."""
+    return f"https://{endpoint}.{INFURA_TLD}/{api_version}/{project_id}"
 
 
 def elapsed(start, end):
