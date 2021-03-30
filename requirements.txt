@@ -1,4 +1,5 @@
 cliff
+flake8
 tox==3.23.0
 cookiecutter>=1.4.0
 pytest==5.4.3
@@ -12,3 +13,7 @@ setuptools_scm
 python_secrets
 sphinx
 sphinx_rtd_theme
+slither-analyzer
+py-solc
+py-solc-x
+web3
