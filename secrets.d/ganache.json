@@ -1,0 +1,14 @@
+[
+  {
+    "Variable": "ganache_host",
+    "Type": "string",
+    "Prompt": "Ganache server IP",
+    "Options": "127.0.0.1,*"
+  },
+  {
+    "Variable": "ganache_port",
+    "Type": "string",
+    "Prompt": "Ganache server port",
+    "Options": "7545,*"
+  }
+]

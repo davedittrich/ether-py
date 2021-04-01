@@ -4,6 +4,13 @@ import datetime
 import os
 import textwrap
 
+ETHERPY_CONTRACTS_DIR = os.path.join(
+    os.environ.get(
+        "ETHERPY_CONTRACTS_DIR",
+        os.getcwd()
+    ),
+    'contracts'
+)
 ETHERPY_DATA_DIR = os.environ.get(
     "ETHERPY_DATA_DIR",
     os.getcwd()

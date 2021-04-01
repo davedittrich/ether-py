@@ -7,7 +7,10 @@ import time
 import webbrowser
 
 from collections import OrderedDict
-from logging import Logger
+from web3 import Web3
+from web3.types import (
+    HexBytes
+)
 
 
 BROWSER = os.getenv('BROWSER', None)
@@ -32,6 +35,15 @@ def infura_url(
 ):
     """Return full project URL for Infura endpoint."""
     return f"https://{endpoint}.{INFURA_TLD}/{api_version}/{project_id}"
+
+
+def to_str(item):
+    if type(item) is HexBytes:
+        return Web3.toHex(item)
+    # elif type(item) is list:
+    #     return str(item)
+    else:
+        return str(item)
 
 
 def elapsed(start, end):
@@ -168,8 +180,6 @@ def open_browser(page=None, browser=None, force=False):
         webbrowser.get(browser).open_new_tab(page)
     else:
         webbrowser.open(page, new=1)
-
-
 
 
 # vim: set ts=4 sw=4 tw=0 et :

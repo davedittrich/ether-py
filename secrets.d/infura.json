@@ -1,0 +1,26 @@
+[
+  {
+    "Variable": "infura_endpoint",
+    "Type": "string",
+    "Prompt": "Infura endpoint",
+    "Options": "mainnet,ropsten,kovan,rinkeby,goerli,*"
+  },
+  {
+    "Variable": "infura_project_id",
+    "Type": "string",
+    "Prompt": "Infura project ID",
+    "Options": "*"
+  },
+  {
+    "Variable": "infura_project_secret",
+    "Type": "string",
+    "Prompt": "Infura project secret",
+    "Options": "*"
+  },
+  {
+    "Variable": "infura_api_version",
+    "Type": "string",
+    "Prompt": "Infura API version",
+    "Options": "v3,*"
+  }
+]

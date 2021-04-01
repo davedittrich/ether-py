@@ -1,0 +1,8 @@
+[
+  {
+    "Variable": "ethereum_address",
+    "Type": "string",
+    "Prompt": "Ethereum public wallet address",
+    "Options": "*"
+  }
+]
