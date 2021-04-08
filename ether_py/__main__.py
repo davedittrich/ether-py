@@ -26,9 +26,20 @@ from ether_py.utils import (
 
 from cliff.app import App
 from cliff.commandmanager import CommandManager
-from psec.secrets import SecretsEnvironment
+from psec.secrets_environment import SecretsEnvironment
 from web3 import Web3
 
+# List command groups that require an established connection
+# to an ethereum endpoint.
+REQUIRES_ETH_ENDPOINT = [
+    'block',
+    'demo',
+    'eth',
+    'logs',
+    'net',
+    'solc',
+    'tx',
+]
 
 if sys.version_info < (3, 6, 0):
     print(f"The { os.path.basename(sys.argv[0]) } program "
@@ -143,18 +154,19 @@ class Ether_pyApp(App):
                 api_version=self.infura_api_version)
         self.w3 = Web3(Web3.HTTPProvider(self.ethereum_url))
         if not self.w3.isConnected():
-            sys.exit(f'[+] connection to {self.ethereum_url} failed')
+            sys.exit(f'[+] connection to {self.infura_endpoint} '
+                     f'endpoint {self.ethereum_url} failed')
         if self.options.verbose_level > 1 or self.options.debug:
-            self.LOG.info(f'[+] established connection to {self.ethereum_url}')
+            print(f'[+] established connection to {self.ethereum_url}')
         self.LOG.debug(f'[+] api {self.w3.api}, '
                        f'clientVersion {self.w3.clientVersion}')
-        # self.LOG.info('[+] current ethereum block is '
-        #               f'{self.w3.eth.blockNumber}')
+        # print('[+] current ethereum block is '
+        #       f'{self.w3.eth.blockNumber}')
         # self.ethereum_balance = self.w3.fromWei(
         #     self.w3.eth.getBalance(account=self.ethereum_address),
         #     'ether')
-        # self.LOG.info('[+] current ether balance is '
-        #               f'{self.ethereum_balance}')
+        # print('[+] current ether balance is '
+        #       f'{self.ethereum_balance}')
 
     def initialize_app(self, argv):
         self.LOG.debug('initialize_app')
@@ -167,16 +179,19 @@ class Ether_pyApp(App):
         self.se = SecretsEnvironment(environment=self.environment,
                                      export_env_vars=True)
         self.se.read_secrets_and_descriptions()
-        self.setup_endpoint()
 
     def prepare_to_run_command(self, cmd):
         if cmd.app_args.verbose_level > 1:
-            self.LOG.info('[+] command line: {}'.format(
-                " ".join([arg for arg in sys.argv])
-            ))
+            print(
+                f"[+] command line: {os.path.basename(sys.argv[0])} "
+                f"{' '.join([arg for arg in sys.argv[1:]])}"
+            )
         self.LOG.debug('prepare_to_run_command %s', cmd.__class__.__name__)
         if self.options.elapsed:
             self.timer.start()
+        cmd_group = cmd.cmd_name.split(' ')[0]
+        if cmd_group in REQUIRES_ETH_ENDPOINT:
+            self.setup_endpoint()
 
     def clean_up(self, cmd, result, err):
         self.LOG.debug('[!] clean_up %s', cmd.__class__.__name__)

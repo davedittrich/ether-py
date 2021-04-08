@@ -38,9 +38,6 @@ def contract_filename(contract_name, file_type):
 def get_contract_data(contract_name, file_type):
     """Return the data for a named contract by type."""
     abs_path = _get_abs_path(contract_name, file_type)
-    # if must_exist and not os.path.exists(abs_path):
-    #     sys.exit(
-    #         f"[-] file '{abs_path}' does not exist")
     with open(abs_path, 'r') as f_in:
         content = f_in.read()
     return content

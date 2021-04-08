@@ -8,6 +8,7 @@ import logging
 import os
 import secrets  # noqa
 import solcx
+import sys
 import textwrap
 
 from cliff.command import Command
@@ -18,6 +19,7 @@ from . import (
     get_contract_data,
     save_contract_data,
 )
+from solcx.exceptions import SolcNotInstalled
 
 
 class GreeterCompile(Command):
@@ -28,6 +30,12 @@ class GreeterCompile(Command):
     def get_parser(self, prog_name):
         parser = super().get_parser(prog_name)
         parser.formatter_class = argparse.RawDescriptionHelpFormatter
+        parser.add_argument(
+            '--solc-version',
+            dest='solc_version',
+            default="latest",
+            help="Use solc compiler version (default: 'latest')"
+        )
         parser.epilog = textwrap.dedent("""\
             Compile Greeter contract.
            \n""")
@@ -37,19 +45,35 @@ class GreeterCompile(Command):
         self.log.debug('[+] demo compile Greeter contract')
         contract_name = 'Greeter'
         source_path = contract_filename(contract_name, 'sol')
+        source_sol = get_contract_data(contract_name, 'sol')
         source_name = os.path.basename(source_path)
         openzeppelin = os.path.join(
             os.path.dirname(ETHERPY_CONTRACTS_DIR),
             "node_modules",
             "@openzeppelin/"
         )
+        version_pragma = None
+        if parsed_args.solc_version is None:
+            version_pragma = f"pragma solidity ^{parsed_args.solc_version};"
+        else:
+            for line in source_sol.split('\n'):
+                if line.startswith('pragma solidity'):
+                    version_pragma = line
+                    break
         os.environ['SOLC_ARGS'] = f"openzeppelin={openzeppelin}"
+        try:
+            solcx.set_solc_version_pragma(version_pragma)
+        except SolcNotInstalled as err:
+            sys.exit(
+                f"[-] {err.args[0].split('.')[0]} matching "
+                f"'{version_pragma}': see 'ether-py solc install --help'"
+            )
         compiled_sol = solcx.compile_standard(
             {
                 "language": "Solidity",
                 "sources": {
                     source_name: {
-                        "content": f"{get_contract_data(contract_name, 'sol')}"
+                        "content": f"{source_sol}"
                     }
                 },
                 "settings": {
@@ -68,25 +92,11 @@ class GreeterCompile(Command):
         )
         bytecode = compiled_sol['contracts'][source_name][contract_name]['evm']['bytecode']['object']  # noqa
         save_contract_data(contract_name, 'bytecode', bytecode)
-        self.log.info(f"[+] created {contract_filename(contract_name, 'bytecode')}")  # noqa
-        metadata = json.loads(compiled_sol['contracts'][source_name][contract_name]['metadata'])
+        print(f"[+] created {contract_filename(contract_name, 'bytecode')}")  # noqa
+        metadata = json.loads(compiled_sol['contracts'][source_name][contract_name]['metadata'])  # noqa
         abi = metadata['output']['abi']
         save_contract_data(contract_name, 'abi', json.dumps(abi))
-        self.log.info(f"[+] created {contract_filename(contract_name, 'abi')}")
-
-    # # Get latest N blocks
-    # latest_block = w3.eth.block_number
-    # n = 10
-    # last_n_blocks = [
-    #     w3.eth.getBlock(block)
-    #     for block in range(latest_block, latest_block - n, -1)
-    # ]
-    # # Get transaction from block by hash
-    # hash = w3.toHex(last_n_blocks[0]['hash'])
-    # transactions = [
-    # ]
-    # transaction = w3.eth.getTransactionByBlock(hash, 2)
-    # pass
+        print(f"[+] created {contract_filename(contract_name, 'abi')}")
 
 
 class GreeterLoad(Command):
@@ -110,8 +120,9 @@ class GreeterLoad(Command):
         w3.eth.default_account = w3.eth.accounts[0]
         bytecode = get_contract_data(contract_name, 'bytecode')
         abi = json.loads(get_contract_data(contract_name, 'abi'))
-        tx_hash = w3.eth.contract(abi=abi,
-                                  bytecode=bytecode).constructor().transact()
+        tx_hash = w3.eth.contract(
+            abi=abi,
+            bytecode=bytecode).constructor().transact()
         tx_receipt = w3.eth.waitForTransactionReceipt(tx_hash)
         contract_address = tx_receipt.contractAddress
         save_contract_data(contract_name, 'address', contract_address)
@@ -119,7 +130,8 @@ class GreeterLoad(Command):
             print(contract_address)
         elif self.app_args.verbose_level > 1:
             print(f"[+] transaction {contract_address} received")
-        print(f"[+] greeter says '{contract.functions.greet().call()}'")
+            contract = w3.eth.contract(address=contract_address, abi=abi)
+            print(f"[+] greeter says '{contract.functions.greet().call()}'")
 
 
 class GreeterCall(Command):
@@ -130,10 +142,6 @@ class GreeterCall(Command):
     def get_parser(self, prog_name):
         parser = super().get_parser(prog_name)
         parser.formatter_class = argparse.RawDescriptionHelpFormatter
-        # parser.add_argument(
-        #     'address',
-        #     nargs=1,
-        #     default=None)
         parser.add_argument(
             'message',
             nargs=1,
