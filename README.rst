@@ -15,7 +15,9 @@ ether-py
 .. |Docs| image:: https://readthedocs.org/projects/ether-py/badge/?version=latest
    :target: https://ether-py.readthedocs.io
 
-The ether-py Ethereum command line interface.
+``ether-py`` provides a general Python command line interface (CLI) for interacting with
+the Ethereum blockchain.
+
 
 * Version: 2021.3.0
 * GitHub repo: https://github.com/davedittrich/ether-py/
@@ -27,30 +29,20 @@ The ether-py Ethereum command line interface.
 Features
 --------
 
-* ``ether-py`` provides a general Python command line interface (CLI)
-  built on the OpenStack
-  `cliff -- Command Line Interface Formulation Framework <https://github.com/openstack/cliff>`_.
-* ``cliff`` provides many useful features like modularizing subcommands into
-  groups, built-in help for internally documenting commands, and producing
+* ``ether-py`` is built on top of the OpenStack
+  `cliff -- Command Line Interface Formulation Framework <https://github.com/openstack/cliff>`_
+  which provides many useful features like: modularizing subcommands into
+  groups; built-in help for internally documenting commands; and producing
   output in clean tabular form or in one of several data formats you can
   feed into other tools or automation platforms.
+* Uses the `python_secrets <https://pypi.org/project/python-secrets>`_ package (``psec``)
+  to manage endpoint configuration settings and access control tokens to prevent secrets
+  leakage and to make it easy to switch between local development/testing using
+  `ganache <https://www.trufflesuite.com/ganache>`_ and accessing a
+  live Ethereum blockchain using `Infura endpoints <https://infura.io>`_.
 * Uses `py-solc-x <https://github.com/iamdefinitelyahuman/py-solc-x>`_ for installing Solidity
   compilers and compiling Solidity smart contracts (``.sol`` files)
-* `Sphinx <http://www.sphinx-doc.org/>`_ documentation for generation with `ReadTheDocs <https://readthedocs.com>`_
-  including ``cliff`` autoprogram `Sphinx integration <https://docs.openstack.org/cliff/latest/user/sphinxext.html>`_
-  for documenting commands from the same ``--help`` output you can get at the command line.
-* Pre-configured for unit testing with `pytest <https://docs.pytest.org/en/stable/>`_,
-  Python security vulnerability scanning with `bandit <https://bandit.readthedocs.io>`_,
-  integration and system testing with BATS (`bats-core <https://bats-core.readthedocs.io>`_),
-  and Python library dependency security scanning with GitHub's
   `dependabot <https://docs.github.com/en/code-security/supply-chain-security/configuring-dependabot-security-updates>`_.
-* Uses `Tox <https://tox.readthedocs.io/>`_ for testing against Python 3.6, 3.7, 3.8, and 3.9.
-* Set up for version number bumping with a single command using `bump2version <https://github.com/c4urself/bump2version>`_.
-* Set up for `GitHub Actions <https://docs.github.com/en/actions/learn-github-actions/introduction-to-github-actions>`_
-  workflow processing for automatic testing.
-* The GitHub Actions workflow will also auto-release packages to `PyPI <https://pypi.org/>`_ or
-  `Test PyPI <https://test.pypi.org>`_ when you push a new version tag on the ``master`` branch, or a
-  special ``rc`` tag on the ``develop`` branch.
 
 
 Contact
