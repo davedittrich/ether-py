@@ -8,8 +8,8 @@ ether-py
 
 .. |Versions| image:: https://img.shields.io/pypi/pyversions/ether-py.svg
    :target: https://pypi.org/project/ether-py
-.. |Contributors| image:: https://img.shields.io/github/contributors/davedittrich/ether_py.svg
-   :target: https://github.com/davedittrich/ether_py/graphs/contributors
+.. |Contributors| image:: https://img.shields.io/github/contributors/davedittrich/ether-py.svg
+   :target: https://github.com/davedittrich/ether-py/graphs/contributors
 .. |License| image:: https://img.shields.io/github/license/davedittrich/ether-py.svg
    :target: https://github.com/davedittrich/ether-py/blob/master/LICENSE
 .. |Docs| image:: https://readthedocs.org/projects/ether-py/badge/?version=latest
@@ -18,7 +18,7 @@ ether-py
 The ether-py Ethereum command line interface.
 
 * Version: 2021.3.0
-* GitHub repo: https://github.com/davedittrich/ether_py/
+* GitHub repo: https://github.com/davedittrich/ether-py/
 * License: Apache Software License 2.0
 
 
@@ -27,7 +27,7 @@ The ether-py Ethereum command line interface.
 Features
 --------
 
-* ``ether_py`` provides a general Python command line interface (CLI)
+* ``ether-py`` provides a general Python command line interface (CLI)
   built on the OpenStack
   `cliff -- Command Line Interface Formulation Framework <https://github.com/openstack/cliff>`_.
 * ``cliff`` provides many useful features like modularizing subcommands into
