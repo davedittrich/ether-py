@@ -4,9 +4,8 @@ import os
 import solcx
 
 
-SOLCX_BINARY_PATH = os.getenv(
-    'SOLCX_BINARY_PATH',
-    solcx.get_solcx_install_folder()
+SOLCX_BINARY_PATH = solcx.get_solcx_install_folder(
+    solcx_binary_path=os.getenv('SOLCX_BINARY_PATH', None)
 )
 
 

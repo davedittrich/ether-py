@@ -100,7 +100,7 @@ class SolcVersions(Lister):
             for version in solc_versions
             if (
                 parsed_args.version is None
-                or version.find(parsed_args.version) > 0
+                or str(version).find(parsed_args.version) != -1
             )
         ]
         return (columns, data)

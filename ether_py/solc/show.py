@@ -44,7 +44,7 @@ class SolcShow(ShowOne):
         self.log.debug('[+] showing solc compiler information')
         try:
             solc_version = str(solcx.get_solc_version(with_commit_hash=False))
-            solc_version_with_hash = str(solcx.get_solc_version(with_commit_hash=True))
+            solc_version_with_hash = str(solcx.get_solc_version(with_commit_hash=True))  # noqa
             solc_executable = str(solcx.install.get_executable())
             solc_installed_versions = ",".join(
                 [
@@ -54,7 +54,12 @@ class SolcShow(ShowOne):
             )
         except Exception as err:
             sys.exit(" ".join(err.args))
-        columns = ['active_version', 'active_version_hash', 'executable', 'installed_versions']
+        columns = [
+            'active_version',
+            'active_version_hash',
+            'executable',
+            'installed_versions'
+        ]
         data = [
             solc_version,
             solc_version_with_hash,

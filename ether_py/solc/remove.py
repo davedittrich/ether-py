@@ -59,10 +59,17 @@ class SolcRemove(Command):
             str(version)
             for version in solcx.get_installed_solc_versions()
         ]
-        for version in parsed_args.version:
+        installed_versions.sort(reverse=True)
+        if 'latest' in parsed_args.version:
+            remove_versions = installed_versions[0]
+        elif 'all' in parsed_args.version:
+            remove_versions = installed_versions
+        else:
+            remove_versions = parsed_args.version
+        for version in remove_versions:
             if version not in installed_versions:
                 print(('[-] solidity compiler version '
-                       f'{version} is not installed'),
+                       f"'{version}'' is not installed"),
                       file=sys.stderr)
             else:
                 compiler_path = os.path.join(
