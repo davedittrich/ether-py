@@ -122,8 +122,9 @@ def elapsed(start, end):
     assert start <= end
     hours, rem = divmod(end - start, 3600)
     minutes, seconds = divmod(rem, 60)
-    return "{:0>2}:{:0>2}:{:05.2f}".format(
-        int(hours), int(minutes), seconds)
+    return (f"{int(hours):0>2}:"
+            f"{int(minutes):0>2}:"
+            f"{seconds:05.2f}")
 
 
 # TODO(dittrich): Import from psec (once circular import issue fixed)
@@ -141,7 +142,7 @@ class Timer(object):
         with Timer() as t:
             r = requests.get(url)
 
-        print 'fetched %r in %.2f millisecs' % (url, t.elapsed*1000)
+        print 'fetched %r in %.2f msec' % (url, t.elapsed*1000)
 
     """
 
