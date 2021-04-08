@@ -67,7 +67,7 @@ Credits
 
 This package was created with `Cookiecutter
 <https://github.com/cookiecutter/cookiecutter>`_ from the
-<https://davedittrich/cookiecutter-cliffapp-template.git> project template.  It
+<https://github.com/davedittrich/cookiecutter-cliffapp-template> project template.  It
 derives some of its features and inspiration from
 <https://github.com/veit/cookiecutter-namespace-template> and
 <https://github.com/audreyfeldroy/cookiecutter-pypackage>.
