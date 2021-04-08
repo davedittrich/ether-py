@@ -12,12 +12,14 @@ import sys
 import textwrap
 
 from cliff.command import Command
-# from web3 import Web3
-from ether_py import ETHERPY_CONTRACTS_DIR
-from . import (
+from ether_py.utils import (
+    ETHERPY_CONTRACTS_DIR,
+)
+from ether_py.utils import (
     contract_filename,
     get_contract_data,
     save_contract_data,
+    tx_receipt_to_text,
 )
 from solcx.exceptions import SolcNotInstalled
 
