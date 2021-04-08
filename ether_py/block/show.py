@@ -10,7 +10,7 @@ from cliff.show import ShowOne
 
 
 class BlockShow(ShowOne):
-    """Show Ethereum block."""
+    """Show Ethereum block"""
 
     log = logging.getLogger(__name__)
 

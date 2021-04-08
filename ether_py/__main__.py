@@ -157,7 +157,9 @@ class Ether_pyApp(App):
             sys.exit(f'[+] connection to {self.infura_endpoint} '
                      f'endpoint {self.ethereum_url} failed')
         if self.options.verbose_level > 1 or self.options.debug:
-            print(f'[+] established connection to {self.ethereum_url}')
+            print('[+] established connection to '
+                  f'{self.infura_endpoint} endpoint '
+                  f'at {self.ethereum_url}')
         self.LOG.debug(f'[+] api {self.w3.api}, '
                        f'clientVersion {self.w3.clientVersion}')
         # print('[+] current ethereum block is '

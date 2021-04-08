@@ -9,7 +9,7 @@ from cliff.command import Command
 
 
 class EthSend(Command):
-    """Send Ethereum."""
+    """Send Ethereum"""
 
     log = logging.getLogger(__name__)
 

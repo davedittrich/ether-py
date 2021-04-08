@@ -10,7 +10,7 @@ from cliff.show import ShowOne
 
 
 class SolcShow(ShowOne):
-    """Show solc compiler information."""
+    """Show solc compiler information"""
 
     log = logging.getLogger(__name__)
 
@@ -22,11 +22,20 @@ class SolcShow(ShowOne):
             nargs='?',
             default=[])
         parser.epilog = textwrap.dedent("""\
-            Show ``solc`` compiler information.
+            Show information about the active ``solc`` compiler.
 
             ::
 
                 $ ether-py solc show
+                +---------------------+------------------------------------+
+                | Field               | Value                              |
+                +---------------------+------------------------------------+
+                | active_version      | 0.8.0                              |
+                | active_version_hash | 0.8.0+commit.c7dfd78e              |
+                | executable          | /Users/dittrich/.solcx/solc-v0.8.0 |
+                | installed_versions  | 0.8.0,0.7.6                        |
+                +---------------------+------------------------------------+
+
 
             """)  # noqa
         return parser

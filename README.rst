@@ -34,11 +34,12 @@ Features
   groups, built-in help for internally documenting commands, and producing
   output in clean tabular form or in one of several data formats you can
   feed into other tools or automation platforms.
-* Uses `py-solc-x <https://github.com/iamdefinitelyahuman/py-solc-x>`_ for compiling Solidity smart contracts
+* Uses `py-solc-x <https://github.com/iamdefinitelyahuman/py-solc-x>`_ for installing Solidity
+  compilers and compiling Solidity smart contracts (``.sol`` files)
 * `Sphinx <http://www.sphinx-doc.org/>`_ documentation for generation with `ReadTheDocs <https://readthedocs.com>`_
   including ``cliff`` autoprogram `Sphinx integration <https://docs.openstack.org/cliff/latest/user/sphinxext.html>`_
   for documenting commands from the same ``--help`` output you can get at the command line.
-* Preconfigured for unit testing with `pytest <https://docs.pytest.org/en/stable/>`_,
+* Pre-configured for unit testing with `pytest <https://docs.pytest.org/en/stable/>`_,
   Python security vulnerability scanning with `bandit <https://bandit.readthedocs.io>`_,
   integration and system testing with BATS (`bats-core <https://bats-core.readthedocs.io>`_),
   and Python library dependency security scanning with GitHub's

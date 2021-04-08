@@ -12,7 +12,7 @@ from cliff.command import Command
 
 
 class SolcRemove(Command):
-    """Remove solc-x compiler version(s)."""
+    """Remove solc compiler version(s)"""
 
     log = logging.getLogger(__name__)
 
@@ -26,9 +26,29 @@ class SolcRemove(Command):
         parser.epilog = textwrap.dedent("""\
             Remove one or more ``solc`` compiler versions.
 
+            Specify one or more compiler versions by their version
+            number, by a substring (to select more than one version
+            in a series), the word ``latest`` to remove the highest
+            numbered version, or ``all`` to remove all versions.
+
             ::
 
+                $ ether-py solc versions 0.8
+                +---------+
+                | version |
+                +---------+
+                | 0.8.3   |
+                | 0.8.0   |
+                +---------+
                 $ ether-py solc remove 0.8.0
+                [+] removed /Users/dittrich/.solcx/solc-v0.8.0
+                $ ether-py solc versions
+                +---------+
+                | version |
+                +---------+
+                | 0.8.3   |
+                | 0.7.6   |
+                +---------+
 
             """)  # noqa
         return parser

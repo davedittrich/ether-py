@@ -9,7 +9,7 @@ from cliff.show import ShowOne
 
 
 class EthShow(ShowOne):
-    """Show Ethereum blockchain information."""
+    """Show Ethereum blockchain information"""
 
     log = logging.getLogger(__name__)
 

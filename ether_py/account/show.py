@@ -9,7 +9,7 @@ from web3 import Web3
 
 
 class AccountShow(Lister):
-    """Show Ethereum accounts."""
+    """Show Ethereum accounts"""
 
     log = logging.getLogger(__name__)
 

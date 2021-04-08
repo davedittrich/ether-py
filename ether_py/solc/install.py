@@ -11,7 +11,7 @@ from cliff.command import Command
 
 
 class SolcInstall(Command):
-    """Install solc-x compiler version(s)."""
+    """Install solc compiler version(s)"""
 
     log = logging.getLogger(__name__)
 
@@ -25,19 +25,38 @@ class SolcInstall(Command):
         parser.epilog = textwrap.dedent("""\
             Install one or more ``solc`` compiler versions.
 
-            When you attempt to compile a Solidity smart contract,
-            a compiler matching the pragma specified in the ``.sol``
-            file will be selected. If none is available, you
-            will get an error message showing something like
-            this: ``pragma solidity >=0.6.0 <0.8.0;``
+            Solidity smart contracts (``.sol`` files) usually specify a
+            particular ``solc`` compiler version, or a range of compatible
+            versions, using a ``pragma`` statement that looks like this::
 
-            Select a compiler version matching the range specified
-            from a list of installable ``solc`` versions shown by
-            ``ether-py solc versions --installable``.
+                pragma solidity >=0.6.0 <0.8.0;
+
+            ``ether-py`` will extract the ``pragma`` statement and pass it
+            along to ``solc`` when compiling the contract. If no compatible
+            compiler can be found, you will get an error message that
+            shows the ``pragma`` statement. Select a compiler version that
+            matches the range from a list of installable ``solc`` versions
+            shown by ``ether-py solc versions --installable`` (``0.7.6`` will
+            work in this case.) You can then install it, and the most recent
+            compiler version, like this:
 
             ::
 
-                $ ether-py solc install 0.7.7 0.8.0
+                $ ether-py solc install 0.7.6 latest
+                solcx                     INFO     Downloading from https://solc-bin.ethereum.org/macosx-amd64/solc-macosx-amd64-v0.7.6+commit.7338295f
+                solcx                     INFO     solc 0.7.6 successfully installed at: /Users/dittrich/.solcx/solc-v0.7.6
+                [+] installed solc version '0.7.6'
+                solcx                     INFO     Downloading from https://solc-bin.ethereum.org/macosx-amd64/solc-macosx-amd64-v0.8.3+commit.8d00100c
+                solcx                     INFO     solc 0.8.3 successfully installed at: /Users/dittrich/.solcx/solc-v0.8.3
+                [+] installed solc version 'latest'
+                $ ether-py solc versions
+                +---------+
+                | version |
+                +---------+
+                | 0.8.3   |
+                | 0.8.0   |
+                | 0.7.6   |
+                +---------+
 
             """)  # noqa
         return parser
@@ -73,6 +92,6 @@ class SolcInstall(Command):
                                    show_progress=show_progress,
                                    solcx_binary_path=SOLCX_BINARY_PATH)
                 if self.app_args.verbose_level == 1:
-                    print(f'[+] installed solc version {version}')
+                    print(f"[+] installed solc version '{version}'")
 
 # vim: set ts=4 sw=4 tw=0 et :

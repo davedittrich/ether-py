@@ -9,7 +9,7 @@ from cliff.show import ShowOne
 
 
 class NetShow(ShowOne):
-    """Show Ethereum net."""
+    """Show Ethereum net"""
 
     log = logging.getLogger(__name__)
 

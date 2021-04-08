@@ -9,7 +9,7 @@ from cliff.command import Command
 
 
 class BlockGet(Command):
-    """Get Ethereum block."""
+    """Get Ethereum block"""
 
     log = logging.getLogger(__name__)
 

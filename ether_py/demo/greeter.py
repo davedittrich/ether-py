@@ -23,7 +23,7 @@ from solcx.exceptions import SolcNotInstalled
 
 
 class GreeterCompile(Command):
-    """Compile Greeter."""
+    """Compile ``Greeter`` contract"""
 
     log = logging.getLogger(__name__)
 
@@ -37,8 +37,35 @@ class GreeterCompile(Command):
             help="Use solc compiler version (default: 'latest')"
         )
         parser.epilog = textwrap.dedent("""\
-            Compile Greeter contract.
-           \n""")
+            Compile the ``Greeter`` contract.
+
+            If no compatible compiler is installed, you will get a message showing
+            the pragma specified in the ``.sol`` file:
+
+            ::
+
+                $ ether-py demo greeter compile
+                [-] No compatible solc version installed matching 'pragma solidity >=0.6.0 <0.8.0;': see 'ether-py solc install --help'
+
+            Identify a compatible version using ``ether-py solc versions --installable``
+            and install before trying again:
+
+            ::
+
+                $ ether-py solc install  0.7.6
+                solcx                     INFO     Downloading from https://solc-bin.ethereum.org/macosx-amd64/solc-macosx-amd64-v0.7.6+commit.7338295f
+                solcx                     INFO     solc 0.7.6 successfully installed at: /Users/dittrich/.solcx/solc-v0.7.6
+                [+] installed solc version '0.7.6'
+                $ ether-py demo greeter compile -v
+                initialize_app
+                [+] command line: ether-py demo greeter compile -v
+                [+] established connection to ganache endpoint at http://127.0.0.1:7545
+                solcx                     INFO     Using solc version 0.7.6
+                [+] created /Users/dittrich/git/ether-py/contracts/Greeter.bytecode
+                [+] created /Users/dittrich/git/ether-py/contracts/Greeter.abi
+
+
+           \n""")  # noqa
         return parser
 
     def take_action(self, parsed_args):
@@ -100,7 +127,7 @@ class GreeterCompile(Command):
 
 
 class GreeterLoad(Command):
-    """Load Greeter contract."""
+    """Load ``Greeter`` contract"""
 
     log = logging.getLogger(__name__)
 
@@ -108,12 +135,22 @@ class GreeterLoad(Command):
         parser = super().get_parser(prog_name)
         parser.formatter_class = argparse.RawDescriptionHelpFormatter
         parser.epilog = textwrap.dedent("""\
-            FILL THIS IN.
-           \n""")
+            Saves the ``Greeter`` contract to the ethereum blockchain.
+
+            ::
+
+                $ ether-py demo -v greeter load
+                initialize_app
+                [+] command line: ether-py demo -v greeter load
+                [+] established connection to ganache endpoint at http://127.0.0.1:7545
+                [+] transaction 0xF43Dd5d4f35D468c65B96901B93e8BCaD6F3C210 received
+                [+] greeter says 'Hello'
+
+           \n""")  # noqa
         return parser
 
     def take_action(self, parsed_args):
-        self.log.debug('[+] demo load Greeter contract')
+        self.log.debug('[+] load Greeter contract')
         w3 = self.app.w3
         contract_name = 'Greeter'
         # Set default account for transaction
@@ -124,18 +161,24 @@ class GreeterLoad(Command):
             abi=abi,
             bytecode=bytecode).constructor().transact()
         tx_receipt = w3.eth.waitForTransactionReceipt(tx_hash)
+        tx_receipt_text = tx_receipt_to_text(tx_receipt)
+        save_contract_data(contract_name, 'receipt', tx_receipt_text)
         contract_address = tx_receipt.contractAddress
         save_contract_data(contract_name, 'address', contract_address)
         if self.app_args.verbose_level == 1:
             print(contract_address)
         elif self.app_args.verbose_level > 1:
             print(f"[+] transaction {contract_address} received")
+        if self.app_args.verbose_level > 2:
+            for line in tx_receipt_text.split('\n'):
+                print(f"[+] {line}")
+        if self.app_args.verbose_level == 1:
             contract = w3.eth.contract(address=contract_address, abi=abi)
             print(f"[+] greeter says '{contract.functions.greet().call()}'")
 
 
 class GreeterCall(Command):
-    """Call Greeter contract."""
+    """Call ``Greeter`` contract"""
 
     log = logging.getLogger(__name__)
 

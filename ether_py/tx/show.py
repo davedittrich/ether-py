@@ -10,7 +10,7 @@ from cliff.show import ShowOne
 
 
 class TxShow(ShowOne):
-    """Show Ethereum transaction."""
+    """Show Ethereum transaction"""
 
     log = logging.getLogger(__name__)
 
