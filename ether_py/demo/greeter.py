@@ -14,8 +14,6 @@ import textwrap
 from cliff.command import Command
 from ether_py.utils import (
     ETHERPY_CONTRACTS_DIR,
-)
-from ether_py.utils import (
     contract_filename,
     get_contract_data,
     save_contract_data,
