@@ -162,13 +162,6 @@ class Ether_pyApp(App):
                   f'at {self.ethereum_url}')
         self.LOG.debug(f'[+] api {self.w3.api}, '
                        f'clientVersion {self.w3.clientVersion}')
-        # print('[+] current ethereum block is '
-        #       f'{self.w3.eth.blockNumber}')
-        # self.ethereum_balance = self.w3.fromWei(
-        #     self.w3.eth.getBalance(account=self.ethereum_address),
-        #     'ether')
-        # print('[+] current ether balance is '
-        #       f'{self.ethereum_balance}')
 
     def initialize_app(self, argv):
         self.LOG.debug('initialize_app')
@@ -188,7 +181,7 @@ class Ether_pyApp(App):
                 f"[+] command line: {os.path.basename(sys.argv[0])} "
                 f"{' '.join([arg for arg in sys.argv[1:]])}"
             )
-        self.LOG.debug('prepare_to_run_command %s', cmd.__class__.__name__)
+        self.LOG.debug(f"prepare_to_run_command('{cmd.cmd_name}')")
         if self.options.elapsed:
             self.timer.start()
         cmd_group = cmd.cmd_name.split(' ')[0]
@@ -238,7 +231,7 @@ if __name__ == '__main__':
     # Ensure that running program with either "python -m ether_py"
     # or just "ether-py" result in same argv.
     if sys.argv[0].endswith('__main__.py'):
-        sys.argv[0] = os.path.basename(os.path.dirname(sys.argv[0]))
+        sys.argv[0] = 'ether-py'
     sys.exit(main(sys.argv[1:]))
 
 # EOF
