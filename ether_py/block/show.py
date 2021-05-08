@@ -19,12 +19,18 @@ class BlockShow(ShowOne):
         parser.formatter_class = argparse.RawDescriptionHelpFormatter
         parser.add_argument(
             'block',
+            metavar='BLOCK',
             nargs=1,
-            default=None)
+            default=None,
+            help="Ethereum block number",
+        )
         parser.add_argument(
             'field',
+            metavar='FIELD',
             nargs='?',
-            default=[])
+            default=[],
+            help="Block metadata field",
+        )
         parser.epilog = textwrap.dedent("""\
             Get an Ethereum block.
 

@@ -9,9 +9,8 @@ import webbrowser
 from collections import OrderedDict
 from ether_py import ETHERPY_CONTRACTS_DIR
 from web3 import Web3
-from web3.types import (
-    HexBytes
-)
+from web3.types import HexBytes
+from web3._utils.empty import Empty
 
 
 BROWSER = os.getenv('BROWSER', None)
@@ -19,6 +18,19 @@ INFURA_TLD = 'infura.io'
 # Use syslog for logging?
 # TODO(dittrich): Make this configurable, since it can fail on Mac OS X
 SYSLOG = False
+ETH_ATTRIBUTES = [
+    'block_number',
+    'chain_id',
+    'coinbase',
+    'default_account',
+    'default_block',
+    'gas_price',
+    'hashrate',
+    'is_async',
+    'mining',
+    'protocol_version',
+    'syncing'
+]
 TX_ATTRIBUTES = {
     'blockHash': Web3.toHex,
     'blockNumber': int,
@@ -82,16 +94,6 @@ def save_contract_data(contract_name, file_type, data=''):
         f_out.write(data)
 
 
-def tx_receipt_to_text(tx_receipt):
-    """Convert a transaction receipt to text form."""
-    return "\n".join(
-        [
-            f"{item}: {to_str(getattr(tx_receipt, item))}"
-            for item in TX_ATTRIBUTES.keys()
-        ]
-    )
-
-
 def ganache_url(host='127.0.0.1', port='7445'):
     """Return URL for Ganache test server."""
     return f"http://{host}:{port}"
@@ -109,6 +111,8 @@ def infura_url(
 def to_str(item):
     if type(item) is HexBytes:
         return Web3.toHex(item)
+    elif type(item) is Empty:
+        return 'None'
     # elif type(item) is list:
     #     return str(item)
     else:

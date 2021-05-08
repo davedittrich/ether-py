@@ -9,10 +9,6 @@ from cliff.lister import Lister
 from ether_py.utils import (
     ETHERPY_CONTRACTS_DIR,
     VALID_CONTRACT_TYPES,
-    # contract_filename,
-    # get_contract_data,
-    # save_contract_data,
-    # tx_receipt_to_text,
 )
 
 check_extensions = [
@@ -40,12 +36,15 @@ class ContractList(Lister):
         #     action='store_true',
         #     dest='installable',
         #     default=False,
-        #     help=('Show installable versions (default: False)')
+        #     help='Show installable versions (default: False)'
         # )
         parser.add_argument(
             'name',
+            metavar='NAME',
             nargs='?',
-            default=None)
+            default=None,
+            help="Solidity contract name",
+        )
         parser.epilog = textwrap.dedent(f"""\
             List Solidity contracts and related files.
 
@@ -100,13 +99,25 @@ class ContractList(Lister):
                 | SimpleCollectible    | No  | No      | No       | No      |
                 +----------------------+-----+---------+----------+---------+
 
+            You can limit the output to one or more contracts by naming them
+            as arguments on the command line::
+
+                $ ether-py contract list Greeter
+                +---------+-----+---------+----------+---------+
+                | name    | abi | address | bytecode | receipt |
+                +---------+-----+---------+----------+---------+
+                | Greeter | Yes | Yes     | Yes      | Yes     |
+                +---------+-----+---------+----------+---------+
+
+            Use the ``-v`` option to show the path to the contracts
+            directory.
             """)  # noqa
         return parser
 
     def take_action(self, parsed_args):
         self.log.debug('[+] listing contract related files')
         # We're only going to show existence of files other
-        # than .sol files. They are implicit.
+        # than .sol files. The .sol files are implicit.
 
         columns = ['name'] + check_extensions
         contract_names = [
@@ -124,13 +135,20 @@ class ContractList(Lister):
         # but other file types are listed as "Yes" or "No" depending
         # on whether they exist or not.
         data = []
+        if self.app_args.verbose_level > 1:
+            print("[+] listing information for contracts "
+                  f"in {ETHERPY_CONTRACTS_DIR}")
         for name in contract_names:
-            data.append(
-                [name] + [
-                    exists_file(name, ext, all_files)
-                    for ext in check_extensions
-                ]
-            )
+            if (
+                parsed_args.name is None
+                or name in parsed_args.name
+            ):
+                data.append(
+                    [name] + [
+                        exists_file(name, ext, all_files)
+                        for ext in check_extensions
+                    ]
+                )
         return (columns, data)
 
 

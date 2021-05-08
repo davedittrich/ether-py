@@ -18,8 +18,11 @@ class AccountShow(Lister):
         parser.formatter_class = argparse.RawDescriptionHelpFormatter
         parser.add_argument(
             'address',
+            metavar="ADDRESS",
             nargs='?',
-            default=[])
+            default=[],
+            help="Ethereum account address",
+        )
         parser.epilog = textwrap.dedent("""\
             Shows Ethereum accounts.
 

@@ -43,7 +43,7 @@ __author__ = 'Dave Dittrich'
 __copyright__ = copyright()
 __email__ = 'dave.dittrich@gmail.com'
 __license__ = 'Apache Software License 2.0'
-__name__ = 'ether-py'
+__project_name__ = 'ether-py'
 __release__ = '2021.3.0'
 __version__ = None
 __summary__ = 'The ether-py Ethereum command line interface.'
@@ -72,6 +72,8 @@ __all__ = [
     '__author__',
     '__copyright__',
     '__email__',
+    '__license__',
+    '__project_name__',
     '__release__',
     '__summary__',
     '__title__',

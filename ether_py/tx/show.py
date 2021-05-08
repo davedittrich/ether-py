@@ -19,12 +19,18 @@ class TxShow(ShowOne):
         parser.formatter_class = argparse.RawDescriptionHelpFormatter
         parser.add_argument(
             'tx',
+            metavar='TRANSACTION',
             nargs=1,
-            default=None)
+            default=None,
+            help="Transaction ID",
+        )
         parser.add_argument(
             'field',
+            metavar='FIELD',
             nargs='?',
-            default=[])
+            default=[],
+            help="Transaction metadata field",
+        )
         parser.epilog = textwrap.dedent("""\
             Show an Ethereum transaction (tx).
 

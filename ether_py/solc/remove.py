@@ -21,8 +21,11 @@ class SolcRemove(Command):
         parser.formatter_class = argparse.RawDescriptionHelpFormatter
         parser.add_argument(
             'version',
+            metavar='VERSION',
             nargs='+',
-            default=['latest'])
+            default=['latest'],
+            help="Solidity compiler version",
+        )
         parser.epilog = textwrap.dedent("""\
             Remove one or more ``solc`` compiler versions.
 

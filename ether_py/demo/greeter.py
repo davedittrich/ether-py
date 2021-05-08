@@ -17,7 +17,6 @@ from ether_py.utils import (
     contract_filename,
     get_contract_data,
     save_contract_data,
-    tx_receipt_to_text,
 )
 from solcx.exceptions import SolcNotInstalled
 
@@ -32,6 +31,7 @@ class GreeterCompile(Command):
         parser.formatter_class = argparse.RawDescriptionHelpFormatter
         parser.add_argument(
             '--solc-version',
+            metavar="VERSION",
             dest='solc_version',
             default="latest",
             help="Use solc compiler version (default: 'latest')"
@@ -44,7 +44,7 @@ class GreeterCompile(Command):
 
             ::
 
-                $ ether-py demo greeter compile
+                $ ether-py demo Greeter compile
                 [-] No compatible solc version installed matching 'pragma solidity >=0.6.0 <0.8.0;': see 'ether-py solc install --help'
 
             Identify a compatible version using ``ether-py solc versions --installable``
@@ -56,9 +56,9 @@ class GreeterCompile(Command):
                 solcx                     INFO     Downloading from https://solc-bin.ethereum.org/macosx-amd64/solc-macosx-amd64-v0.7.6+commit.7338295f
                 solcx                     INFO     solc 0.7.6 successfully installed at: /Users/dittrich/.solcx/solc-v0.7.6
                 [+] installed solc version '0.7.6'
-                $ ether-py demo greeter compile -v
+                $ ether-py demo Greeter compile -v
                 initialize_app
-                [+] command line: ether-py demo greeter compile -v
+                [+] command line: ether-py demo Greeter compile -v
                 [+] established connection to ganache endpoint at http://127.0.0.1:7545
                 solcx                     INFO     Using solc version 0.7.6
                 [+] created /Users/dittrich/git/ether-py/contracts/Greeter.bytecode
@@ -139,12 +139,12 @@ class GreeterLoad(Command):
 
             ::
 
-                $ ether-py demo -v greeter load
+                $ ether-py demo -v Greeter load
                 initialize_app
-                [+] command line: ether-py demo -v greeter load
+                [+] command line: ether-py demo -v Greeter load
                 [+] established connection to ganache endpoint at http://127.0.0.1:7545
                 [+] transaction 0xF43Dd5d4f35D468c65B96901B93e8BCaD6F3C210 received
-                [+] greeter says 'Hello'
+                [+] Greeter says 'Hello'
 
            \n""")  # noqa
         return parser
@@ -161,7 +161,7 @@ class GreeterLoad(Command):
             abi=abi,
             bytecode=bytecode).constructor().transact()
         tx_receipt = w3.eth.waitForTransactionReceipt(tx_hash)
-        tx_receipt_text = tx_receipt_to_text(tx_receipt)
+        tx_receipt_text = w3.toJSON(tx_receipt)
         save_contract_data(contract_name, 'receipt', tx_receipt_text)
         contract_address = tx_receipt.contractAddress
         save_contract_data(contract_name, 'address', contract_address)
@@ -174,7 +174,7 @@ class GreeterLoad(Command):
                 print(f"[+] {line}")
         if self.app_args.verbose_level == 1:
             contract = w3.eth.contract(address=contract_address, abi=abi)
-            print(f"[+] greeter says '{contract.functions.greet().call()}'")
+            print(f"[+] Greeter says '{contract.functions.greet().call()}'")
 
 
 class GreeterCall(Command):
@@ -187,8 +187,11 @@ class GreeterCall(Command):
         parser.formatter_class = argparse.RawDescriptionHelpFormatter
         parser.add_argument(
             'message',
+            metavar="MESSAGE",
             nargs=1,
-            default=None)
+            default=None,
+            help="New Greeter message",
+        )
         parser.epilog = textwrap.dedent("""\
             Call the Greeter contract with a message.
            \n""")
@@ -209,7 +212,7 @@ class GreeterCall(Command):
             print(f"[+] calling setGreeting({message})")
             tx_hash = contract.functions.setGreeting(message).transact()
             tx_receipt = w3.eth.waitForTransactionReceipt(tx_hash)
-            print(f"[+] greeter now says '{contract.functions.greet().call()}'")
+            print(f"[+] Greeter now says '{contract.functions.greet().call()}'")
             if self.app_args.verbose_level == 1:
                 print(w3.toHex(tx_receipt.transactionHash))
             elif self.app_args.verbose_level > 1:

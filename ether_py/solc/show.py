@@ -19,8 +19,11 @@ class SolcShow(ShowOne):
         parser.formatter_class = argparse.RawDescriptionHelpFormatter
         parser.add_argument(
             'field',
+            metavar='FIELD',
             nargs='?',
-            default=[])
+            default=[],
+            help="Solidity compiler metadata field",
+        )
         parser.epilog = textwrap.dedent("""\
             Show information about the active ``solc`` compiler.
 

@@ -20,8 +20,11 @@ class SolcInstall(Command):
         parser.formatter_class = argparse.RawDescriptionHelpFormatter
         parser.add_argument(
             'version',
+            metavar='VERSION',
             nargs='+',
-            default=['latest'])
+            default=['latest'],
+            help="Solidity compiler version",
+        )
         parser.epilog = textwrap.dedent("""\
             Install one or more ``solc`` compiler versions.
 

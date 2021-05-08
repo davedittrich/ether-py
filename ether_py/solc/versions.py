@@ -21,10 +21,12 @@ class SolcVersions(Lister):
             action='store_true',
             dest='installable',
             default=False,
-            help=('Show installable versions (default: False)')
+            help='Show installable versions (default: False)'
         )
         parser.add_argument(
             'version',
+            metavar='VERSION',
+            help="Solidity compiler version",
             nargs='?',
             default=None)
         parser.epilog = textwrap.dedent(f"""\

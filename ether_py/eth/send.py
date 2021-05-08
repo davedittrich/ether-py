@@ -18,16 +18,25 @@ class EthSend(Command):
         parser.formatter_class = argparse.RawDescriptionHelpFormatter
         # parser.add_argument(
         #     'from',
+        #     metavar='FROM',
         #     nargs=1,
-        #     default=None)
+        #     default=None,
+        #     help="Sending account",
+        # )
         # parser.add_argument(
         #     'to',
+        #     metavar='TO',
         #     nargs=1,
-        #     default=None)
+        #     default=None,
+        #     help="Receiving account",
+        # )
         parser.add_argument(
             'eth',
+            metavar='ETH',
             nargs=1,
-            default=None)
+            default=None,
+            help="Transaction amount in eth",
+        )
         parser.epilog = textwrap.dedent("""\
             Send Ethereum from one address to another.
             ::

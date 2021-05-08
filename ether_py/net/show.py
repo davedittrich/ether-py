@@ -18,8 +18,11 @@ class NetShow(ShowOne):
         parser.formatter_class = argparse.RawDescriptionHelpFormatter
         parser.add_argument(
             'field',
+            metavar='FIELD',
             nargs='?',
-            default=[])
+            default=[],
+            help="Ethereum network metadata field",
+        )
         parser.epilog = textwrap.dedent("""\
             Shows attributes about Ethereum net.
 

@@ -9,8 +9,8 @@
 # from ether_py import *
 
 from setuptools import (
-    setup,
     find_packages,
+    setup,
 )
 from setuptools_scm import get_version
 
@@ -32,13 +32,15 @@ except (LookupError, ModuleNotFoundError):
 
 setup(
     version=version,
+    setup_requires=['setuptools>=40.9.0', 'pip>=20.2.2'],
+    use_scm_version=True,
+    include_package_data=True,
+    install_requires=requirements,
     long_description=long_description,
     long_description_content_type="text/x-rst",
     namespace_packages=[],
     package_dir={'ether_py': 'ether_py'},
     packages=find_packages(exclude=['tests']),
-    include_package_data=True,
-    install_requires=requirements,
     test_suite='tests',
     zip_safe=False,
 )

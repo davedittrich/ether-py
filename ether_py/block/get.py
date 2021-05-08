@@ -18,8 +18,11 @@ class BlockGet(Command):
         parser.formatter_class = argparse.RawDescriptionHelpFormatter
         parser.add_argument(
             'block',
+            metavar="BLOCK",
             nargs=1,
-            default=None)
+            default=None,
+            help="Ethereum block number",
+        )
         parser.epilog = textwrap.dedent("""\
             Get an Ethereum block.
 
