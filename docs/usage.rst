@@ -62,11 +62,63 @@ format like CSV, or passed directly to programs like Ansible using JSON.
 .. 
 .. ..
 
+Command groups
+--------------
+
 About
------
+~~~~~
 
 .. autoprogram-cliff:: ether_py
    :command: about
+   :ignored: -f,-c,--quote,--noindent,--max-width,--fit-width,--print-empty,--sort-column
+
+Block
+~~~~~
+
+.. autoprogram-cliff:: ether_py
+   :command: block *
+   :ignored: -f,-c,--quote,--noindent,--max-width,--fit-width,--print-empty,--sort-column
+
+Contract
+~~~~~~~~
+
+.. autoprogram-cliff:: ether_py
+   :command: contract *
+   :ignored: -f,-c,--quote,--noindent,--max-width,--fit-width,--print-empty,--sort-column
+
+Demo
+~~~~
+
+.. autoprogram-cliff:: ether_py
+   :command: demo *
+   :ignored: -f,-c,--quote,--noindent,--max-width,--fit-width,--print-empty,--sort-column
+
+Eth
+~~~
+
+.. autoprogram-cliff:: ether_py
+   :command: eth *
+   :ignored: -f,-c,--quote,--noindent,--max-width,--fit-width,--print-empty,--sort-column
+
+Net
+~~~
+
+.. autoprogram-cliff:: ether_py
+   :command: net *
+   :ignored: -f,-c,--quote,--noindent,--max-width,--fit-width,--print-empty,--sort-column
+
+Solc
+~~~~
+
+.. autoprogram-cliff:: ether_py
+   :command: solc *
+   :ignored: -f,-c,--quote,--noindent,--max-width,--fit-width,--print-empty,--sort-column
+
+Tx
+~~
+
+.. autoprogram-cliff:: ether_py
+   :command: tx *
    :ignored: -f,-c,--quote,--noindent,--max-width,--fit-width,--print-empty,--sort-column
 
 
