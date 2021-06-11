@@ -2,7 +2,7 @@
 build/
 .tox/
 dist/
-*.egg-info/
+ether_py.egg-info/
 node_modules/
 package-lock.json
 package.json
