@@ -28,7 +28,13 @@ class BlockGet(Command):
 
             The block number should be the block's number, its hash,
             or the word "latest" to get the most recent block.
-            """)
+
+            ::
+
+                $ ether-py block get latest
+                ether-py                  ERROR    [!] NOT IMPLEMENTED
+
+            ..""")
         return parser
 
     def take_action(self, parsed_args):

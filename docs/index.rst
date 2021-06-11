@@ -6,14 +6,14 @@
 
 
 .. meta::
-   :description: Python CLI for The ether-py Ethereum command line interface.
+   :description: The ether-py Ethereum command line interface.
    :robots: index, follow
    :keywords: python, cli, app, cliff, ether_py
 
 ether-py
 ========
 
-This document (version |release|) describes the the ether-py Ethereum command line interface
+This document (version |release|) describes the ether-py Ethereum command line interface
 (``ether-py`` for short).
 
 .. toctree::

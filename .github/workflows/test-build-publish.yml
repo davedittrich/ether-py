@@ -124,7 +124,7 @@ jobs:
       with:
         repository_url: https://test.pypi.org/legacy/
         user: __token__
-        password: ${{ secrets.TEST_PYPI_PASSWORD }}
+        password: ${{ secrets.ETHERPY_TEST_PYPI_PASSWORD }}
         packages_dir: ${{ steps.get_vars.outputs.ARTIFACT }}
         verify_metadata: false
     - name: Publish tagged artifacts to PyPI
@@ -135,7 +135,7 @@ jobs:
       uses: pypa/gh-action-pypi-publish@release/v1
       with:
         user: __token__
-        password: ${{ secrets.PYPI_PASSWORD }}
+        password: ${{ secrets.ETHERPY_PYPI_PASSWORD }}
         packages_dir: ${{ steps.get_vars.outputs.ARTIFACT }}
         verify_metadata: false
     # ![2-test-build-publish]

@@ -6,11 +6,12 @@ Introduction
 
 This chapter introduces the ether-py Ethereum command line interface (``ether-py`` for short).
 
-.. todo::
+This CLI was inspired, in part, by the article `Creating a Python Ethereum Interface: Part 1`_ for
+similar reasons. I not only wanted to do the same things, but to take advantage of the rich feature
+set provided by `cliff <https://github.com/openstack/cliff>`_ for more output control,
+built-in command help, modularity and extensibility.
 
-   Fill out this section.
-
-..
+.. _Creating a Python Ethereum Interface\: Part 1: https://hackernoon.com/creating-a-python-ethereum-interface-part-1-4d2e47ea0f4d
 
 .. Including parts of the README.rst file for now to make docs more life-like.
 

@@ -29,12 +29,16 @@ the Ethereum blockchain.
 Features
 --------
 
-* ``ether-py`` is built on top of the OpenStack
-  `cliff -- Command Line Interface Formulation Framework <https://github.com/openstack/cliff>`_
-  which provides many useful features like: modularizing subcommands into
-  groups; built-in help for internally documenting commands; and producing
+* ``ether-py`` provides a general Python command line interface (CLI)
+  built on the OpenStack
+  `cliff -- Command Line Interface Formulation Framework <https://github.com/openstack/cliff>`_.
+* ``cliff`` provides many useful features like modularizing subcommands into
+  groups, built-in help for internally documenting commands, and producing
   output in clean tabular form or in one of several data formats you can
   feed into other tools or automation platforms.
+* `Sphinx <http://www.sphinx-doc.org/>`_ documentation for generation with `ReadTheDocs <https://readthedocs.com>`_
+  including ``cliff`` autoprogram `Sphinx integration <https://docs.openstack.org/cliff/latest/user/sphinxext.html>`_
+  for documenting commands from the same ``--help`` output you can get at the command line.
 * Uses the `python_secrets <https://pypi.org/project/python-secrets>`_ package (``psec``)
   to manage endpoint configuration settings and access control tokens to prevent secrets
   leakage and to make it easy to switch between local development/testing using
