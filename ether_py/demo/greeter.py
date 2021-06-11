@@ -209,7 +209,7 @@ class GreeterCall(Command):
         greeting = contract.functions.greet().call()
         print(f"[+] greet() returns '{greeting}'")
         if greeting != message:
-            print(f"[+] calling setGreeting({message})")
+            print(f"[+] calling setGreeting('{message}')")
             tx_hash = contract.functions.setGreeting(message).transact()
             tx_receipt = w3.eth.waitForTransactionReceipt(tx_hash)
             print(f"[+] Greeter now says '{contract.functions.greet().call()}'")
