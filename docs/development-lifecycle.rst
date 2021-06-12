@@ -41,6 +41,50 @@ the command line to test locally:
 
 ..
 
+Documentation
+-------------
+
+Documentation is written in ReStructured Text in files located in the ``docs/`` directory
+and rendered locally with Sphinx using the ``make docs`` command and remotely on
+ReadTheDocs.
+
+Configuration settings for ReadTheDocs are found in the file ``.readthedocs.yml``:
+
+.. literalinclude:: ../.readthedocs.yml
+
+
+.. _Sphinx: https://www.sphinx-doc.org/en/master/
+.. _ReStructured Text: https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html
+.. _ReadTheDocs: https://readthedocs.org/
+
+Two things must be configured for new documentation to be generated
+when you push to GitHub.
+
+#. A `connection`_ between your GitHub account and your ReadTheDocs account
+   must be created.  If one does not already exist, create it now.
+
+   .. image:: images/rtd-github-connection.png
+
+#. A `webhook`_ URL from ReadTheDocs must be created on ReadTheDocs and
+   added to your GitHub repo.
+
+   To create the URL, go to the ReadTheDocs project **Admin** page,
+   select **Integrations** from the left hand menu, select **GitHub
+   incoming webhook**, then copy the webhook URL.
+
+   To add it to your project's GitHub repo, select the **Settings** tab,
+   then select **Webhooks** from the left hand menu, then **Add Webhook**.
+   Paste the webhook URL into the **Payload URL** dialog box (making sure
+   the URL starts with ``https://`` ) and finally clicking the **Add webook**
+   button at the bottom of the page.
+
+When a push to GitHub is made, the webhook is triggered signaling to
+ReadTheDocs to pull the most recent code and render the documentation.
+
+.. _webhook: https://docs.readthedocs.io/en/stable/webhooks.html
+.. _connection: https://readthedocs.org/accounts/social/connections/
+
+
 Version numbering
 -----------------
 
